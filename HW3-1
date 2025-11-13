@@ -1,0 +1,69 @@
+// 腳位設定
+const int buttonPin = 2;   // 按鈕輸入
+const int redPin = 10;     // R
+const int greenPin = 11;   // G
+const int bluePin = 9;     // B
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP); // 使用內建上拉電阻
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+
+  // 開機預設白光（共陽LED：LOW = 亮）
+  showWhite();
+}
+
+void loop() {
+  int buttonState = digitalRead(buttonPin);
+
+  if (buttonState == LOW) {
+    // 按下按鈕時依序閃爍藍、黃、紅
+    flashBlue();
+    flashYellow();
+    flashRed();
+  } else {
+    // 沒按時維持白光常亮
+    showWhite();
+  }
+}
+
+// === 顏色函式 ===
+void showWhite() {
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(bluePin, LOW);
+}
+
+void flashBlue() {
+  digitalWrite(redPin, HIGH);
+  digitalWrite(greenPin, HIGH);
+  digitalWrite(bluePin, LOW);
+  delay(1000);
+  allOff();
+  delay(200);
+}
+
+void flashYellow() {
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(bluePin, HIGH);
+  delay(1000);
+  allOff();
+  delay(200);
+}
+
+void flashRed() {
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, HIGH);
+  digitalWrite(bluePin, HIGH);
+  delay(1000);
+  allOff();
+  delay(200);
+}
+
+void allOff() {
+  digitalWrite(redPin, HIGH);
+  digitalWrite(greenPin, HIGH);
+  digitalWrite(bluePin, HIGH);
+}
